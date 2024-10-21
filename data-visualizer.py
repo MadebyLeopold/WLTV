@@ -8,8 +8,7 @@ from matplotlib.animation import FuncAnimation
 
 # Liste der URLs, die getestet werden sollen
 urls = [
-    "https://www.juzztfriends.de/",
-    # Füge hier weitere URLs hinzu
+    "https://example.com",  # Beispiel-URL
 ]
 
 # Dictionary zum Speichern der Ladezeiten
