@@ -8,7 +8,8 @@ from matplotlib.animation import FuncAnimation
 
 # Liste der URLs, die getestet werden sollen
 urls = [
-    "https://example.com",  # Beispiel-URL
+    "https://www.example.com",  # Beispiel-URL
+    # Füge hier weitere URLs hinzu
 ]
 
 # Dictionary zum Speichern der Ladezeiten
@@ -41,17 +42,21 @@ def update(frame):
                 load_times[url].pop(0)  # Entfernt den ältesten Wert
 
     plt.cla()  # Löscht das Diagramm für ein frisches Zeichnen
+
+    # Plot für jede URL
     for url in urls:
         plt.plot(load_times[url], label=f"Ladezeit {url}")
 
         # Letzte Ladezeit und Durchschnitt berechnen
         last_time = load_times[url][-1]
         avg_time = sum(load_times[url]) / len(load_times[url])
-        
+
         # Letzte Ladezeit und Durchschnittswert anzeigen
         plt.text(len(load_times[url])-1, last_time + 0.01, f"{last_time:.2f}s", ha='center', color='blue')
-        plt.text(len(load_times[url])-1, avg_time + 0.01, f"Avg: {avg_time:.2f}s", ha='center', color='orange')
-        plt.axhline(y=sum(load_times[url])/len(load_times[url]), color='y', linestyle='--', label="Durchschnitt")
+        plt.text(len(load_times[url])-1, avg_time + 0.05, f"Avg: {avg_time:.2f}s", ha='center', color='orange')
+
+        # Durchschnittslinie hinzufügen
+        plt.axhline(y=avg_time, color='y', linestyle='--', label=f"Durchschnitt {url}")
 
     # Bestimme den besten und schlechtesten Wert
     all_load_times = [lt for times in load_times.values() for lt in times if lt is not None]
@@ -60,7 +65,6 @@ def update(frame):
         worst_time = max(all_load_times)
         plt.axhline(y=best_time, color='g', linestyle='--', label="Beste Ladezeit")
         plt.axhline(y=worst_time, color='r', linestyle='--', label="Schlechteste Ladezeit")
-        
 
     plt.title("Ladezeiten mehrerer Websites")
     plt.xlabel("Anzahl der Messungen")
